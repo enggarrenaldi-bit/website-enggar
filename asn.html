@@ -3,12 +3,170 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e1b22">
   <title>ASN — Enggar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <main>
-    <h1>ASN</h1>
+<body class="halaman-asn" id="atas">
+  <header class="atas">
+    <a href="index.html" class="logo" aria-label="Kembali ke beranda Enggar">
+      <img src="assets/logo.png" alt="" class="logo-gambar">
+      <span>Enggar</span>
+    </a>
+
+    <nav class="menu" aria-label="Menu utama">
+      <a href="asn.html" aria-current="page">ASN</a>
+      <a href="Project.html">Project</a>
+      <a href="Tanaman.html">Tanaman</a>
+      <a href="Traveling.html">Traveling</a>
+    </nav>
+  </header>
+
+  <main class="kanvas-asn">
+    <section class="judul-asn" aria-labelledby="judul-halaman">
+      <p class="label-asn">Uji coba pengelolaan dokumen</p>
+      <h1 id="judul-halaman">Menu ASN</h1>
+      <p>Simulasikan pemberian nama dan pengelompokan berkas berdasarkan kegiatan.</p>
+    </section>
+
+    <section class="panel-asn" aria-label="Form uji coba dokumen ASN">
+      <form id="form-asn" novalidate>
+        <div class="field-grid">
+          <label>
+            Nama kegiatan
+            <input id="kegiatan" name="kegiatan" type="text" placeholder="Contoh: Pelatihan ASN" required>
+          </label>
+
+          <label>
+            Tanggal
+            <input id="tanggal" name="tanggal" type="date" required>
+          </label>
+
+          <label>
+            Jenis dokumen
+            <select id="jenis" name="jenis" required>
+              <option value="">Pilih jenis</option>
+              <option value="Undangan">Undangan</option>
+              <option value="Daftar Hadir">Daftar Hadir</option>
+              <option value="Notulen">Notulen</option>
+              <option value="Laporan">Laporan</option>
+              <option value="Sertifikat">Sertifikat</option>
+            </select>
+          </label>
+
+          <label>
+            Nama pegawai
+            <input id="pegawai" name="pegawai" type="text" placeholder="Nama lengkap" required>
+          </label>
+
+          <label>
+            NIP
+            <input id="nip" name="nip" type="text" inputmode="numeric" placeholder="Opsional">
+          </label>
+
+          <label>
+            Berkas
+            <input id="berkas" name="berkas" type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required>
+          </label>
+        </div>
+
+        <div class="pratinjau-asn" aria-live="polite">
+          <span>Nama file otomatis</span>
+          <strong id="nama-file">Belum lengkap</strong>
+          <small id="folder-tujuan">Folder tujuan: —</small>
+        </div>
+
+        <button class="tombol-asn" type="submit">Uji pemrosesan</button>
+        <p class="catatan-asn" id="status-asn">Mode uji coba: belum terhubung ke Google Drive.</p>
+      </form>
+    </section>
+
+    <section class="alur-asn" aria-label="Alur uji coba">
+      <article><span>01</span><h2>Isi data</h2><p>Tentukan kegiatan, tanggal, jenis dokumen, dan nama pegawai.</p></article>
+      <article><span>02</span><h2>Beri nama</h2><p>Website menyusun nama file secara konsisten untuk mempermudah pencarian.</p></article>
+      <article><span>03</span><h2>Kelompokkan</h2><p>Sebaran folder dapat mengikuti tahun, bulan, kegiatan, atau jenis dokumen.</p></article>
+    </section>
   </main>
+
+  <a class="tombol-keatas tampil" href="#atas" aria-label="Kembali ke atas">↑</a>
+
+  <script>
+    const form = document.getElementById("form-asn");
+    const kegiatan = document.getElementById("kegiatan");
+    const tanggal = document.getElementById("tanggal");
+    const jenis = document.getElementById("jenis");
+    const pegawai = document.getElementById("pegawai");
+    const nip = document.getElementById("nip");
+    const berkas = document.getElementById("berkas");
+    const namaFile = document.getElementById("nama-file");
+    const folderTujuan = document.getElementById("folder-tujuan");
+    const status = document.getElementById("status-asn");
+
+    tanggal.value = new Date().toISOString().slice(0, 10);
+
+    function bersihkanNama(teks) {
+      return teks
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-zA-Z0-9]+/g, " ")
+        .trim()
+        .replace(/\s+/g, "_");
+    }
+
+    function dapatkanEkstensi(nama) {
+      const bagian = nama.split(".");
+      return bagian.length > 1 ? `.${bagian.pop().toLowerCase()}` : "";
+    }
+
+    function perbaruiPratinjau() {
+      const tanggalDipilih = tanggal.value;
+      const bagianTanggal = tanggalDipilih ? tanggalDipilih.split("-") : [];
+
+      if (!tanggalDipilih || !kegiatan.value.trim() || !jenis.value || !pegawai.value.trim()) {
+        namaFile.textContent = "Belum lengkap";
+        folderTujuan.textContent = "Folder tujuan: —";
+        return;
+      }
+
+      const [tahun, bulan, hari] = bagianTanggal;
+      const namaBersih = bersihkanNama(pegawai.value);
+      const nipBersih = nip.value.replace(/[^0-9]/g, "");
+      const identitas = nipBersih ? `${namaBersih}_${nipBersih}` : namaBersih;
+      const ekstensi = berkas.files[0] ? dapatkanEkstensi(berkas.files[0].name) : ".pdf";
+
+      namaFile.textContent = `${tahun}-${bulan}-${hari}_${bersihkanNama(kegiatan.value)}_${jenis.value.replace(/\s+/g, "_")}_${identitas}${ekstensi}`;
+      folderTujuan.textContent = `Folder tujuan: ASN/${tahun}/${bulan}_${namaBulan(bulan)}/${bersihkanNama(kegiatan.value)}`;
+    }
+
+    function namaBulan(nomor) {
+      const bulan = ["", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+      return bulan[Number(nomor)] || "";
+    }
+
+    [kegiatan, tanggal, jenis, pegawai, nip, berkas].forEach((elemen) => {
+      elemen.addEventListener("input", perbaruiPratinjau);
+      elemen.addEventListener("change", perbaruiPratinjau);
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+        status.textContent = "Lengkapi data dan pilih berkas sebelum memulai uji coba.";
+        status.className = "catatan-asn gagal";
+        form.reportValidity();
+        return;
+      }
+
+      perbaruiPratinjau();
+      status.textContent = `Berhasil diuji: “${namaFile.textContent}”. Google Apps Script belum dijalankan pada mode ini.`;
+      status.className = "catatan-asn berhasil";
+    });
+
+    perbaruiPratinjau();
+  </script>
 </body>
 </html>
