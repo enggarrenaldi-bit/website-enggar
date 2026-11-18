@@ -1,0 +1,130 @@
+k<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e1b22">
+  <title>Enggar</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body id="atas">
+  <video class="latar" autoplay muted loop playsinline aria-hidden="true">
+    <source src="assets/latar.mp4" type="video/mp4">
+  </video>
+  <div class="lapisan" aria-hidden="true"></div>
+
+  <header class="atas">
+    <a href="#atas" class="logo" aria-label="Kembali ke beranda Enggar">
+      <img src="assets/logo.png" alt="" class="logo-gambar">
+      <span>Enggar</span>
+    </a>
+
+    <nav class="menu" aria-label="Menu utama">
+      <a href="asn.html">ASN</a>
+      <a href="project.html">Project</a>
+      <a href="tanaman.html">Tanaman</a>
+      <a href="traveling.html">Traveling</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="beranda" aria-label="Kutipan pilihan">
+      <blockquote class="kutipan" id="kutipan">
+        <p id="teks-kutipan"></p>
+        <p id="terjemahan-kutipan"></p>
+        <footer id="sumber-kutipan"></footer>
+      </blockquote>
+
+      <a class="petunjuk-gulir" href="#pilihan-menu" aria-label="Lihat menu di bawah">
+        <span>Lihat menu</span>
+        <span class="panah-bawah" aria-hidden="true">↓</span>
+      </a>
+    </section>
+
+    <section class="pilihan-menu" id="pilihan-menu">
+      <div class="judul-pilihan">
+        <p>Jelajahi</p>
+        <h1>Hal-hal yang aku jalani</h1>
+      </div>
+
+      <div class="kartu-grid">
+        <a
+          class="kartu"
+          href="asn.html"
+          style="--gambar-kartu: url('assets/asn.jpg')"
+        >
+          <span class="nomor-kartu">01</span>
+          <div class="isi-kartu">
+            <h2>ASN</h2>
+            <span>Lihat cerita <span aria-hidden="true">↗</span></span>
+          </div>
+        </a>
+
+        <a
+          class="kartu"
+          href="project.html"
+          style="--gambar-kartu: url('assets/project.jpg')"
+        >
+          <span class="nomor-kartu">02</span>
+          <div class="isi-kartu">
+            <h2>Project</h2>
+            <span>Lihat karya <span aria-hidden="true">↗</span></span>
+          </div>
+        </a>
+
+        <a
+          class="kartu"
+          href="tanaman.html"
+          style="--gambar-kartu: url('assets/tanaman.jpg')"
+        >
+          <span class="nomor-kartu">03</span>
+          <div class="isi-kartu">
+            <h2>Tanaman</h2>
+            <span>Lihat koleksi <span aria-hidden="true">↗</span></span>
+          </div>
+        </a>
+
+        <a
+          class="kartu"
+          href="traveling.html"
+          style="--gambar-kartu: url('assets/traveling.jpg')"
+        >
+          <span class="nomor-kartu">04</span>
+          <div class="isi-kartu">
+            <h2>Traveling</h2>
+            <span>Lihat perjalanan <span aria-hidden="true">↗</span></span>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <a
+    class="instagram"
+    href="https://www.instagram.com/enggar.rn/"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Kunjungi Instagram Enggar"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+      <circle cx="12" cy="12" r="4"></circle>
+      <circle cx="17.5" cy="6.5" r="1"></circle>
+    </svg>
+  </a>
+
+  <a class="tombol-keatas" href="#atas" aria-label="Kembali ke atas">
+    ↑
+  </a>
+</body>
+</html>
